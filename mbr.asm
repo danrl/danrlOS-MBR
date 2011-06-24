@@ -1,4 +1,18 @@
-; danrlOS bootloader for x86
+;    danrlOS bootloader for x86
+;    Copyright (C) 2011  Dan Luedtke <mail (at) danrl (dot) de>
+;
+;    This program is free software: you can redistribute it and/or modify
+;    it under the terms of the GNU General Public License as published by
+;    the Free Software Foundation, either version 3 of the License, or
+;    (at your option) any later version.
+;
+;    This program is distributed in the hope that it will be useful,
+;    but WITHOUT ANY WARRANTY; without even the implied warranty of
+;    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;    GNU General Public License for more details.
+;
+;    You should have received a copy of the GNU General Public License
+;    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ; --------------------------------------
 %define BIOS_START		0x7C00
 %define MBR_SIZE		0x200
@@ -142,7 +156,7 @@
 	or	al, 1
 	mov	cr0, eax
 	jmp 0x8:protected_mode
-[Bits 32]
+[BITS 32]
 	protected_mode:
 	; set registers
 	mov	ax, 0x10		; dec 16
@@ -156,7 +170,7 @@
 ; far jump to kernel
 	jmp	KERNEL_ADDR		; jump to c-kernel
 
-[Bits 16]
+[BITS 16]
 ; --------------------------------------
 ; functions
 load_blockbuffer:
