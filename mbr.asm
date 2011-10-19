@@ -1,24 +1,25 @@
-;    danrlOS bootloader for x86
-;    Copyright (C) 2011  Dan Luedtke <mail (at) danrl (dot) de>
+; ----------------------------------------------------------------------
+; danrlOS-MBR - a x86-bootloader
+; Copyright (C) 2011  Dan Luedtke <mail@danrl.de>
 ;
-;    This program is free software: you can redistribute it and/or modify
-;    it under the terms of the GNU General Public License as published by
-;    the Free Software Foundation, either version 3 of the License, or
-;    (at your option) any later version.
+; This program is free software: you can redistribute it and/or modify
+; it under the terms of the GNU General Public License as published by
+; the Free Software Foundation, either version 3 of the License, or
+; (at your option) any later version.
 ;
-;    This program is distributed in the hope that it will be useful,
-;    but WITHOUT ANY WARRANTY; without even the implied warranty of
-;    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-;    GNU General Public License for more details.
+; This program is distributed in the hope that it will be useful,
+; but WITHOUT ANY WARRANTY; without even the implied warranty of
+; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+; GNU General Public License for more details.
 ;
-;    You should have received a copy of the GNU General Public License
-;    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-; --------------------------------------
+; You should have received a copy of the GNU General Public License
+; along with this program.  If not, see <http://www.gnu.org/licenses/>.
+; ----------------------------------------------------------------------
 %define BIOS_START		0x7C00
 %define MBR_SIZE		0x200
 %define BLOCKBUFFER_SIZE	0x200
 %define	FIRST_PART_OFFSET	0x01BE
-; --------------------------------------
+; ----------------------------------------------------------------------
 %define BLOCKBUFFER		BIOS_START + MBR_SIZE
 %define FIRST_PARTITION		BIOS_START + FIRST_PART_OFFSET
 %define KERNEL_ADDR		BIOS_START + MBR_SIZE + BLOCKBUFFER_SIZE
@@ -26,9 +27,11 @@
 %define DFS_DATA_END		BIOS_START + MBR_SIZE + 0x1FB + 0x01
 %define DFS_NEXTBLOCK_0		BIOS_START + MBR_SIZE + 0x1FC
 %define DFS_NEXTBLOCK_1		BIOS_START + MBR_SIZE + 0x1FE
-; --------------------------------------
+; ----------------------------------------------------------------------
 [ORG BIOS_START]
 [BITS 16]
+; danrlFS bootloader-blocktype is 0x90, which is NOP in ASM
+	nop				; blocktype 0x90
 ; boot
 	cli				; disable interrupts
 	xor	ax, ax			; clear ax
@@ -171,7 +174,7 @@
 	jmp	KERNEL_ADDR		; jump to c-kernel
 
 [BITS 16]
-; --------------------------------------
+; ----------------------------------------------------------------------
 ; functions
 load_blockbuffer:
 	; print a fancy dot
@@ -235,7 +238,7 @@ print_string:
 	.ret:
 	ret				; exit function
 
-; --------------------------------------
+; ----------------------------------------------------------------------
 ; data
 ; CR=0x0D, LF=0x0A, NULL=0
 	danrlos		db '-danrlOS-', 0x0D, 0x0A, '[boot]', 0
@@ -310,7 +313,7 @@ print_string:
 	gdt_toc:
 	dw 	24			; size of gdt
 	dd	gdt_null_descriptor	; base of gdt
-; --------------------------------------
+; ----------------------------------------------------------------------
 ; fill up to 440 byte
 	times	440-($-$$) db 0		; padding
 	; disk signature (optional)
@@ -321,7 +324,7 @@ print_string:
 	; 16 zeros (only heaven knows why)
 	db	0
 	db	0
-; --------------------------------------
+; ----------------------------------------------------------------------
 ; partition table
 	; -------- PARTITION NUMBER 1 --------
 	; status flag
@@ -431,7 +434,7 @@ print_string:
 	db	0x00
 	db	0x00
 	db	0x00
-
+; ----------------------------------------------------------------------
 	; MBR signature
 	db	0x55			; boot sector signature
 	db	0xAA			; boot sector signature
