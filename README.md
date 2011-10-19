@@ -6,12 +6,12 @@ x86-bootloader
 ## About
 
 A x86-bootloader for danrlOS using Disk Address Packets for boot-media access.
-BIOS Interrupt 0x13 with register AH set to 0x42 allows extended reading of sectors from a drive. This method allows a bootloader to load data from a drive without calculating head and track numbers. Moreover, it is possible to boot a kernel that resides at the end of a large drive. Unfortunately most bootloaders still use the old and limited method Interrupt 0x13 with AH set to 0x02.
+BIOS Interrupt 0x13 with register AH set to 0x42 allows extended reading of sectors from a drive. This method allows a bootloader to load data from a drive without calculating head and track numbers. Moreover, it is possible to boot a kernel that resides at the end of a large drive. Unfortunately, most bootloaders still use the old and limited method Interrupt 0x13 with AH set to 0x02.
 
 
 ## Author
 
-Written by Dan Luedtke <mail@danrl.de>
+Written by Dan Luedtke <mail@danrl.de>.
 
 
 ## License
